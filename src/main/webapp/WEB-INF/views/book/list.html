@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <title>Book</title>
+</head>
+<body>
+<p>
+    <a th:href="@{/}">Back to homepage</a>
+</p>
+<p>
+    <a href="/create-book">Create new book</a>
+</p>
+<h1>Books</h1>
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Author</th>
+        <th>Price</th>
+<!--        <th>Quantity</th>-->
+        <th>Category</th>
+<!--        <th>Image</th>-->
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <th:block th:each="book : ${books}">
+        <tr>
+            <td th:text="${book.name}"></td>
+            <td th:text="${book.dateOfPurchase}"></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.price}"></td>
+<!--            <td th:text="${material.quantity}"></td>-->
+            <td th:text="${book.category.name}"></td>
+<!--            <td><img th:src="${material.image}" th:width="100px" th:height="100px"></td>-->
+            <td><a th:href="@{/edit-book/__${book.id}__ }">Edit</a></td>
+            <td><a th:href="@{/delete-book/__${book.id}__ }">Delete</a></td>
+        </tr>
+    </th:block>
+</table>
+<div>
+    <a th:href="@{'/books'(page=${books.number - 1})}" th:if="${books.hasPrevious()}">Previous</a>
+    <span th:text="${books.number + 1}"></span>/<span th:text="${books.totalPages}"></span>
+    <a th:href="@{'/materials'(page=${books.number + 1})}" th:if="${books.hasNext()}">Next</a>
+</div>
+</body>
+</html>
